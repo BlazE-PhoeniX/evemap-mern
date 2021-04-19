@@ -1,0 +1,31 @@
+extends base
+
+mixin navItem(link, text, active)
+  li(class=`${active? "side-nav--active" : ""}`)
+    a(href=`${link}`) #{text}
+
+block content
+  main.main
+    .user-view
+      nav.user-view__menu
+        ul.side-nav
+          +navItem("#", "My profile", true)
+          +navItem("/", "My events")
+          +navItem("/password-change", "Change Password")
+          li(class="side-nav--logout")
+            a(href=`#`) logout
+
+      .user-view__content
+        .user-view__form-container
+          h2.heading-secondary.ma-bt-md Your account settings
+
+          //- with api
+          form.form.form-user-data
+            .form__group
+              label.form__label(for='name') Name
+              input#name.form__input(type='text', value=`${user.name}`, required, name="name")
+            .form__group.ma-bt-md
+              label.form__label(for='email') Email address
+              input#email.form__input(type='email', value=`${user.email}`, required, name="email")
+            .form__group.right
+              button.btn.btn--small.btn--green(type="submit") Save details

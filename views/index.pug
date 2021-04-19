@@ -1,0 +1,82 @@
+extends base
+
+block head 
+  script(src='https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js')
+  link(href='https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css' rel='stylesheet')
+  script(src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.min.js")
+  link(rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.css" type="text/css")
+
+block content
+  main.index-box
+    .sidebar
+
+      div.options-box
+
+        form.search-div
+          input.search-bar(list="events-name" placeholder="Search with name")
+          datalist#events-name
+          button.search-btn(type="submit")
+            img(src="/resources/search.svg")
+            
+        .sidebar__btn-grp
+          select.select.select--sort
+            option(default value="") Sort
+            option(value="+date") Date &uarr;
+            option(value="-date") Date &darr;
+            option(value="+distance") Distance &uarr;
+            option(value="-distance") Distance &darr;
+          select.select.select--filter
+            option(default value="") Filter
+            option(value="today") Today events
+            option(value="distance") Within 50 kms
+
+
+      ul(class="events")
+
+      footer.footer 
+        p &copy; Mini-project by group 3
+
+    #map
+
+  .modal-bg
+    .modal
+      h2.modal-header.heading-secondary Event Details
+      table
+        input#event-id.table__input(type='hidden' readonly)
+        input#event-lat.table__input(type='hidden' readonly)
+        input#event-lng.table__input(type='hidden' readonly)
+        tr
+          td Name
+          td :
+          td
+            input#event-name.table__input(type='text' required)
+        tr
+          td Date
+          td :
+          td
+            input#event-date.table__input(type='date' required)
+        tr
+          td Time
+          td :
+          td
+            input#event-time.table__input(type='time' required)
+        tr
+          td Description
+          td :
+          td
+            input#event-desc.table__input(type='text' required)
+        tr
+          td Address
+          td :
+          td
+            input#event-addr.table__input(type='text' required)
+      .btn-grp
+        button.model__btn.model__btn--save Save
+        button.model__btn.model__btn--edit Edit
+        button.model__btn.model__btn--delete Delete
+        a.maps-link(href="#" target="_blank") Open in google maps >>  
+      span &times;
+
+  
+
+
