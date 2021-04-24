@@ -4,4 +4,4 @@
 
 Simple event remainder app with integrated open source map to map the event locations
 
-Have fun.....................
+click here:("https://evemap.herokuapp.com") to have fun.
