@@ -11,7 +11,9 @@ module.exports = class Email {
   }
 
   newTransport() {
+    console.log(process.env.NODE_ENV);
     if (process.env.NODE_ENV === "production") {
+      console.log("works");
       return nodemailer.createTransport({
         host: process.env.SIB_HOST,
         port: process.env.SIB_PORT,
@@ -21,8 +23,6 @@ module.exports = class Email {
         },
       });
     }
-
-    console.log(process.env.EMAIL_USER, process.env.EMAIL_PASS);
 
     return nodemailer.createTransport({
       host: process.env.EMAIL_HOST,
