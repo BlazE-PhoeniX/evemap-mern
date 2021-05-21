@@ -18,8 +18,8 @@ const app = express();
 app.enable("trust proxy");
 
 // to initialise pug templates
-app.set("view engine", "pug");
-app.set("views", `${__dirname}/views`);
+// app.set("view engine", "pug");
+// app.set("views", `${__dirname}/views`);
 
 // parses body and limits size
 app.use(express.json({ limit: "10kb" }));
@@ -46,7 +46,8 @@ app.use(
 );
 
 // serving static files
-app.use(express.static(`${__dirname}/public`));
+// app.use(express.static(`${__dirname}/public`));
+app.use(express.static(`${__dirname}/client/build`));
 
 // logging
 if (process.env.NODE_ENV === "development") app.use(morgan("dev"));
@@ -59,14 +60,15 @@ if (process.env.NODE_ENV === "development") app.use(morgan("dev"));
 // compression text in response
 app.use(compression());
 
-app.use("/", viewRouter);
+// app.use("/", viewRouter);
 app.use("/api/v1/events", eventRouter);
 app.use("/api/v1/users", userRouter);
 
 app.all("*", (req, res, next) => {
-  next(
-    new ApiError(404, "fail", `Cant find ${req.originalUrl} on this server`)
-  );
+  // next(
+  //   new ApiError(404, "fail", `Cant find ${req.originalUrl} on this server`)
+  // );
+  res.sendFile("index.html");
 });
 
 // Handle all errors all together
