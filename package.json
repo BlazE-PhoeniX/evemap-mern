@@ -8,7 +8,7 @@
     "dev": "nodemon server.js",
     "debug": "ndb server.js",
     "prod": "NODE_ENV=production nodemon server.js",
-    "heroku-postbuild": "cd client && yarn && yarn build"
+    "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "author": "Hariprasath",
   "license": "ISC",
