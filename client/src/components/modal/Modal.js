@@ -7,7 +7,7 @@ const Modal = props => {
   }, []);
 
   return (
-    <div onClick={props.onCloseModal} className="modal-bg">
+    <div onClick={props.closeModal} className="modal-bg">
       <div onClick={preventClosing} className="modal">
         <h2 className="modal-header heading-secondary">Event Details</h2>
         <Form {...props} />
