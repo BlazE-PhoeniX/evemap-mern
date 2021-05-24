@@ -15,9 +15,9 @@ const validateErrorDB = err => {
 };
 
 const duplicateErrorDB = err => {
-  const message = `Duplicate value for ${Object.keys(err.keyValue)[0]}: ${
+  const message = `${Object.keys(err.keyValue)[0]} ${
     Object.values(err.keyValue)[0]
-  }`;
+  } already axists`;
 
   return new ApiError(400, "fail", message);
 };

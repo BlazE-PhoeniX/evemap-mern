@@ -111,17 +111,11 @@ export default eventsSlice.reducer;
 
 export const getAllEvents = (coords, user) => {
   return async dispatch => {
-    // const token = localStorage.getItem("jwt");
     let events = [];
-    // if (token) {
     if (user) {
       try {
         dispatch(showLoader());
-        const res = await axios.get(`/api/v1/events`, {
-          // headers: {
-          // authorization: "Bearer " + token,
-          // },
-        });
+        const res = await axios.get(`/api/v1/events`);
 
         events = res.data.data.events;
       } catch (err) {
@@ -136,30 +130,20 @@ export const getAllEvents = (coords, user) => {
 export const postOneEvent = (event, coords, closeModal, user) => {
   return async dispatch => {
     const eventDate = new Date(`${event.date.value}T${event.time.value}`);
-    // const token = localStorage.getItem("jwt");
-    // if (token) {
     if (user) {
       let res;
       try {
         dispatch(showLoader());
-        res = await axios.post(
-          "/api/v1/events",
-          {
-            name: event.name.value,
-            date: eventDate,
-            description: event.description.value,
-            location: {
-              type: "Point",
-              coordinates: [+event.lng.value, +event.lat.value],
-              address: event.address.value,
-            },
-          }
-          // {
-          //   headers: {
-          //     authorization: "Bearer " + token,
-          //   },
-          // }
-        );
+        res = await axios.post("/api/v1/events", {
+          name: event.name.value,
+          date: eventDate,
+          description: event.description.value,
+          location: {
+            type: "Point",
+            coordinates: [+event.lng.value, +event.lat.value],
+            address: event.address.value,
+          },
+        });
 
         dispatch(showAlert("success", res.data.message));
         const eve = res.data.data.event;
@@ -182,31 +166,21 @@ export const postOneEvent = (event, coords, closeModal, user) => {
 
 export const updateOneEvent = (event, coords, closeModal, user) => {
   return async dispatch => {
-    // const token = localStorage.getItem("jwt");
     const eventDate = new Date(`${event.date.value}T${event.time.value}`);
-    // if (token) {
     if (user) {
       let res;
       try {
         dispatch(showLoader());
-        res = await axios.patch(
-          `/api/v1/events/${event.id.value}`,
-          {
-            name: event.name.value,
-            date: eventDate,
-            description: event.description.value,
-            location: {
-              type: "Point",
-              coordinates: [+event.lng.value, +event.lat.value],
-              address: event.address.value,
-            },
-          }
-          // {
-          //   headers: {
-          //     authorization: "Bearer " + token,
-          //   },
-          // }
-        );
+        res = await axios.patch(`/api/v1/events/${event.id.value}`, {
+          name: event.name.value,
+          date: eventDate,
+          description: event.description.value,
+          location: {
+            type: "Point",
+            coordinates: [+event.lng.value, +event.lat.value],
+            address: event.address.value,
+          },
+        });
 
         dispatch(showAlert("success", res.data.message));
         const eve = res.data.data.event;
@@ -231,16 +205,10 @@ export const updateOneEvent = (event, coords, closeModal, user) => {
 
 export const deleteOneEvent = (eventId, closeModal, user) => {
   return async dispatch => {
-    // const token = localStorage.getItem("jwt");
-    // if (token) {
     if (user) {
       try {
         dispatch(showLoader());
-        const res = await axios.delete(`/api/v1/events/${eventId}`, {
-          // headers: {
-          // authorization: "Bearer " + token,
-          // },
-        });
+        const res = await axios.delete(`/api/v1/events/${eventId}`);
 
         dispatch(showAlert("success", res.data.message));
         dispatch(eventsActions.removeEvent({ id: eventId }));

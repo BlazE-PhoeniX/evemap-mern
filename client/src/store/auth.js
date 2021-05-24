@@ -123,36 +123,23 @@ export const resetPassword = (creds, history) => {
 
 export const checkLogin = () => {
   return async dispatch => {
-    // const token = localStorage.getItem("jwt");
-    // if (token) {
     try {
       dispatch(showLoader());
-      const res = await axios.get("/api/v1/users/check-login", {
-        // headers: {
-        //   authorization: "Bearer " + token,
-        // },
-      });
+      const res = await axios.get("/api/v1/users/check-login");
       dispatch(authActions.loginUser({ user: res.data.user }));
     } catch (err) {
-      dispatch(showAlert("error", err.response.data.message));
+      console.log(err.response);
     }
     dispatch(hideLoader());
-    // }
   };
 };
 
 export const logoutUser = (history, user) => {
   return async dispatch => {
-    // const token = localStorage.getItem("jwt");
-    // if (token) {
     if (user) {
       try {
         dispatch(showLoader());
-        const res = await axios.get("/api/v1/users/logout", {
-          // headers: {
-          //   authorization: "Bearer " + token,
-          // },
-        });
+        const res = await axios.get("/api/v1/users/logout");
 
         dispatch(showAlert("success", res.data.message));
         localStorage.removeItem("jwt");
@@ -172,54 +159,33 @@ export const logoutUser = (history, user) => {
 
 export const updateProfile = (creds, user) => {
   return async dispatch => {
-    // const token = localStorage.getItem("jwt");
-    // if (token) {
     if (user)
       try {
         dispatch(showLoader());
-        const res = await axios.patch(
-          "/api/v1/users/update-profile",
-          {
-            name: creds.name.value,
-            email: creds.email.value,
-          }
-          // {
-          //   headers: {
-          //     authorization: "Bearer " + token,
-          //   },
-          // }
-        );
+        const res = await axios.patch("/api/v1/users/update-profile", {
+          name: creds.name.value,
+          email: creds.email.value,
+        });
 
         dispatch(showAlert("success", res.data.message));
         dispatch(authActions.loginUser({ user: res.data.data.user }));
       } catch (err) {
         dispatch(showAlert("error", err.response.data.message));
       }
-    // }
     dispatch(hideLoader());
   };
 };
 
 export const updatePassword = (creds, user) => {
   return async dispatch => {
-    // const token = localStorage.getItem("jwt");
-    // if (token) {
     if (user) {
       try {
         dispatch(showLoader());
-        const res = await axios.patch(
-          "/api/v1/users/update-password",
-          {
-            oldPassword: creds.currentPassword.value,
-            password: creds.newPassword.value,
-            passwordConfirm: creds.confirmPassword.value,
-          }
-          // {
-          //   headers: {
-          //     authorization: "Bearer " + token,
-          //   },
-          // }
-        );
+        const res = await axios.patch("/api/v1/users/update-password", {
+          oldPassword: creds.currentPassword.value,
+          password: creds.newPassword.value,
+          passwordConfirm: creds.confirmPassword.value,
+        });
 
         dispatch(showAlert("success", res.data.message));
         localStorage.setItem("jwt", res.data.token);
@@ -231,7 +197,6 @@ export const updatePassword = (creds, user) => {
       } catch (err) {
         dispatch(showAlert("error", err.response.data.message));
       }
-      // }
       dispatch(hideLoader());
     }
   };

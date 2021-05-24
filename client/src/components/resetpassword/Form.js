@@ -3,10 +3,11 @@ import { useDispatch } from "react-redux";
 import useInput, { touchAll, validateAll } from "../../hooks/use-input";
 import { resetPassword } from "../../store/auth";
 import Input from "../ui/Input";
-import { useRouteMatch } from "react-router";
+import { useHistory, useRouteMatch } from "react-router";
 
 const Form = props => {
   const tokenRef = useRef();
+  const history = useHistory();
   const match = useRouteMatch();
   const [formError, setFormError] = useState(null);
   const dispatchRedux = useDispatch();
@@ -28,11 +29,14 @@ const Form = props => {
     }
 
     dispatchRedux(
-      resetPassword({
-        token: tokenRef.current.value,
-        newPassword,
-        confirmPassword,
-      })
+      resetPassword(
+        {
+          token: tokenRef.current.value,
+          newPassword,
+          confirmPassword,
+        },
+        history
+      )
     );
   };
 

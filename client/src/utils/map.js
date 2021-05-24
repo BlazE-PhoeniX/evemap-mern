@@ -1,6 +1,4 @@
-// import { openModalToAdd } from "./model";
-
-import mapboxgl from "mapbox-gl";
+import mapboxgl from "!mapbox-gl";
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 
 let map;
@@ -19,7 +17,6 @@ export const displayMap = async (mapRef, history, showModal, user, coords) => {
     zoom: 10,
   });
 
-  // Add the control to the map.
   map.addControl(
     new MapboxGeocoder({
       accessToken: mapboxgl.accessToken,

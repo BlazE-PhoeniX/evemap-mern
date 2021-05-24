@@ -18,7 +18,7 @@ const Events = props => {
 
   useEffect(() => {
     dispathRedux(getAllEvents(coordinates, user));
-  }, [dispathRedux, coordinates]);
+  }, [dispathRedux, coordinates, user]);
 
   const showEmptyModal = useCallback(
     lnglat => {
