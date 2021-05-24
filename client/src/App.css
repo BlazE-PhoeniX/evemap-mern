@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300&family=Manrope:wght@400;600;700&family=Orbitron&family=Roboto:wght@300;400;700&display=swap");
+
 :root {
   --color-brand--1: rgb(255, 181, 69);
   --color-brand--2: rgb(0, 196, 106);
@@ -28,11 +30,6 @@ body {
   overscroll-behavior-y: none;
 
   background-color: #fff;
-  /* padding: 0 2.5rem; */
-
-  display: grid;
-  grid-template-rows: 8rem 1fr;
-  grid-template-columns: 45rem 1fr;
 }
 
 input,
@@ -46,6 +43,12 @@ button {
 a:link,
 a:visited {
   color: var(--color-brand--1);
+}
+
+#root {
+  display: grid;
+  grid-template-rows: 8rem 1fr;
+  grid-template-columns: 45rem 1fr;
 }
 
 /* SIDEBAR */
@@ -94,6 +97,27 @@ a:visited {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.75rem 1.5rem;
+  transition: all 0.3s;
+}
+
+.event-enter {
+  opacity: 0;
+  transform: translateY(-100%);
+}
+
+.event-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.event-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.event-exit-active {
+  opacity: 0;
+  transform: translateY(-100%);
 }
 
 .event__title {
@@ -142,7 +166,6 @@ a:visited {
   top: 0;
   right: 0;
   padding-left: 3rem;
-  /* background-color: rgba(0, 196, 106, 0.9); */
   background-color: rgba(46, 125, 50);
   clip-path: polygon(0 50%, 20% 0, 100% 0, 100% 100%, 20% 100%);
   display: flex;
@@ -167,24 +190,6 @@ a:visited {
   transform: none;
 }
 
-.copyright {
-  margin-top: auto;
-  font-size: 1.3rem;
-  text-align: center;
-  color: var(--color-light--1);
-}
-
-.twitter-link:link,
-.twitter-link:visited {
-  color: var(--color-light--1);
-  transition: all 0.2s;
-}
-
-.twitter-link:hover,
-.twitter-link:active {
-  color: var(--color-light--2);
-}
-
 /* MAP */
 #map {
   box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.2);
@@ -192,25 +197,6 @@ a:visited {
   height: 100%;
   z-index: 9;
   background-color: var(--color-light--1);
-}
-
-.mapboxgl-popup-content {
-  background-color: var(--color-dark--1);
-  color: var(--color-light--2);
-  border-radius: 5px;
-  padding-right: 0.6rem;
-  border-left: 5px solid var(--color-brand--2);
-  font-size: 1rem;
-}
-
-.mapboxgl-popup-tip {
-  border-top-color: var(--color-dark--1) !important;
-}
-
-.mapboxgl-popup-close-button {
-  color: var(--color-light--1);
-  right: 0.5rem;
-  top: 0.25rem;
 }
 
 .modal-bg {
@@ -227,8 +213,26 @@ a:visited {
   justify-content: center;
   align-items: center;
   transition: transform 0.5s;
+}
+
+.modal-enter {
   transform: translateY(-100%);
-  visibility: hidden;
+  /* visibility: hidden; */
+}
+
+.modal-enter-active {
+  transform: translateY(0);
+  /* visibility: visible; */
+}
+
+.modal-exit {
+  transform: translateY(0);
+  /* visibility: visible; */
+}
+
+.modal-exit-active {
+  transform: translateY(-100%);
+  /* visibility: hidden; */
 }
 
 .modal {
@@ -291,6 +295,20 @@ a:visited {
   transform: translateY(-20%);
   width: 100%;
   outline: none;
+}
+
+.form-error {
+  padding: 0.5rem 0;
+  margin-bottom: 0.5rem;
+  margin-top: -2rem;
+  font-size: 1.6rem;
+  /* background: #ffcdd2; */
+  color: #d32f2f;
+}
+
+.input-error {
+  font-size: 1.4rem;
+  color: #d32f2f;
 }
 
 .btn-grp {
@@ -789,7 +807,7 @@ a:visited {
 
 .nav__el--time {
   font-size: 1.5rem;
-  font-family: "orbitron";
+  font-family: "Orbitron";
   cursor: default;
   display: flex;
   flex-direction: column;
@@ -1008,7 +1026,22 @@ a:visited {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  transition: opacity 0.3s;
+  transition: opacity 0.1s;
+}
+
+.loader-enter {
+  opacity: 0;
+  visibility: hidden;
+}
+.loader-enter-active {
+  opacity: 1;
+  visibility: visible;
+}
+.loader-exit {
+  opacity: 1;
+  visibility: visible;
+}
+.loader-exit-active {
   opacity: 0;
   visibility: hidden;
 }
@@ -1261,12 +1294,26 @@ a:visited {
   padding: 1.6rem 15rem;
   -webkit-box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.25);
   box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.25);
+  transition: all 0.15s;
 }
 .alert--success {
   background-color: #20bf6b;
 }
 .alert--error {
   background-color: #eb4d4b;
+}
+
+.alert-enter {
+  transform: translateX(-50%) translateY(-100%);
+}
+.alert-enter-active {
+  transform: translateX(-50%) translateY(0);
+}
+.alert-exit {
+  transform: translateX(-50%) translateY(0);
+}
+.alert-exit-active {
+  transform: translateX(-50%) translateY(-100%);
 }
 
 .forgot-password {

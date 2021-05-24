@@ -49,13 +49,7 @@ module.exports.signupUser = catchAsync(async (req, res, next) => {
     status: "success",
     message: "user signed up successfully",
     token,
-    data: {
-      user: {
-        name: newlyAddedUser.name,
-        email: newlyAddedUser.email,
-        photo: newlyAddedUser.photo,
-      },
-    },
+    user: newlyAddedUser,
   });
 });
 
@@ -73,6 +67,7 @@ module.exports.loginUser = catchAsync(async (req, res, next) => {
     status: "success",
     message: "user logged in successfully",
     token,
+    user,
   });
 });
 
@@ -129,7 +124,11 @@ module.exports.verifyUser = catchAsync(async (req, res, next) => {
 module.exports.isLoggedIn = async (req, res, next) => {
   let token;
 
-  if (req.cookies.jwt) {
+  let { authorization } = req.headers;
+
+  if (authorization && authorization.startsWith("Bearer")) {
+    token = authorization.split(" ")[1];
+  } else if (req.cookies.jwt) {
     token = req.cookies.jwt;
   }
 
@@ -156,7 +155,11 @@ module.exports.isLoggedIn = async (req, res, next) => {
 module.exports.checkLogIn = async (req, res, next) => {
   let token;
 
-  if (req.cookies.jwt) {
+  let { authorization } = req.headers;
+
+  if (authorization && authorization.startsWith("Bearer")) {
+    token = authorization.split(" ")[1];
+  } else if (req.cookies.jwt) {
     token = req.cookies.jwt;
   }
 
@@ -182,6 +185,7 @@ module.exports.checkLogIn = async (req, res, next) => {
     status: "success",
     message: "user is logged in",
     loggedIn: true,
+    user: currentUser,
   });
 };
 
@@ -239,10 +243,8 @@ module.exports.resetPassword = catchAsync(async (req, res, next) => {
 
   if (!user) throw new ApiError(400, "fail", "Token is invalid or expired");
 
-  ({
-    password: user.password,
-    passwordConfirm: user.passwordConfirm,
-  } = req.body);
+  ({ password: user.password, passwordConfirm: user.passwordConfirm } =
+    req.body);
 
   user.passwordResetToken = user.passwordResetTokenExpiresIn = undefined;
   await user.save();
@@ -265,10 +267,8 @@ module.exports.updatePassword = catchAsync(async (req, res, next) => {
   if (!(await user.comparePasswords(req.body.oldPassword, user.password)))
     return next(new ApiError(401, "fail", "Old password is not valid"));
 
-  ({
-    password: user.password,
-    passwordConfirm: user.passwordConfirm,
-  } = req.body);
+  ({ password: user.password, passwordConfirm: user.passwordConfirm } =
+    req.body);
 
   await user.save();
 
@@ -278,5 +278,6 @@ module.exports.updatePassword = catchAsync(async (req, res, next) => {
     status: "success",
     message: "user password changed successfully",
     token,
+    user,
   });
 });

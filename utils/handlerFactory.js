@@ -41,12 +41,16 @@ exports.updateOne = (Model, modelName) =>
       runValidators: true, //tells the function to validate the input as per schema
     });
 
+    const event = await Model.findById(req.params.id);
+
     if (!doc) throw new ApiError(404, "fail", `${modelName} not found`);
 
     const response = {
       status: "success",
       message: `${modelName} changed successfully`,
-      data: {},
+      data: {
+        event,
+      },
     };
 
     response.data[modelName.toLowerCase()] = doc;

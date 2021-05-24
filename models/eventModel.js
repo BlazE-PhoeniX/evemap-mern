@@ -1,12 +1,10 @@
 const mongoose = require("mongoose");
-const Email = require("./../utils/email");
 
 const EventSchema = new mongoose.Schema(
   {
     name: {
       type: String,
       required: [true, "Event name must not be a empty string"],
-      unique: [true, "Event with the name already exists"],
     },
 
     date: {
@@ -71,7 +69,6 @@ EventSchema.pre(/^find/, function (next) {
 });
 
 EventSchema.post("save", function (doc) {
-  // doc.setRemainder(doc);
   doc.setTimer(doc);
 });
 
@@ -85,27 +82,6 @@ EventSchema.methods.setTimer = function (doc) {
     }
   }, new Date(doc.date) - Date.now());
 };
-
-// EventSchema.methods.setRemainder = function (doc) {
-//   const timeInMs = new Date(doc.date) - Date.now() - 15 * 60 * 1000;
-
-//   if (timeInMs > 0) {
-//     setTimeout(async () => {
-//       const event = await doc.constructor.findById(doc.id).populate({
-//         path: "user",
-//         select: "name email",
-//       });
-//       if (new Date(event.date).getTime() - 15 * 60 * 1000 <= Date.now()) {
-//         await new Email(
-//           event.user,
-//           `${req.protocol}://${req.get("host")}/`
-//         ).sendRemainder();
-//       } else {
-//         event.setRemainder(event);
-//       }
-//     }, timeInMs);
-//   }
-// };
 
 const Event = mongoose.model("Event", EventSchema);
 

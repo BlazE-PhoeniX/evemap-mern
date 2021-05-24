@@ -6,20 +6,15 @@ const hpp = require("hpp");
 const cookieParser = require("cookie-parser");
 const compression = require("compression");
 const cors = require("cors");
+const path = require("path");
 
-const ApiError = require(`${__dirname}/utils/apiError`);
 const globalErrorController = require(`${__dirname}/controllers/errorController`);
 
 const eventRouter = require(`${__dirname}/routes/eventRoutes`);
 const userRouter = require(`${__dirname}/routes/userRoutes`);
-const viewRouter = require(`${__dirname}/routes/viewRoutes`);
 
 const app = express();
 app.enable("trust proxy");
-
-// to initialise pug templates
-// app.set("view engine", "pug");
-// app.set("views", `${__dirname}/views`);
 
 // parses body and limits size
 app.use(express.json({ limit: "10kb" }));
@@ -46,29 +41,20 @@ app.use(
 );
 
 // serving static files
-// app.use(express.static(`${__dirname}/public`));
-app.use(express.static(`${__dirname}/client/build`));
+app.use(express.static(path.join(__dirname, "client/build")));
 
 // logging
 if (process.env.NODE_ENV === "development") app.use(morgan("dev"));
 
-// app.use("*", (req, res, next) => {
-//   console.log(req.body);
-//   next();
-// });
-
 // compression text in response
 app.use(compression());
 
-// app.use("/", viewRouter);
 app.use("/api/v1/events", eventRouter);
 app.use("/api/v1/users", userRouter);
 
-app.all("*", (req, res, next) => {
-  // next(
-  //   new ApiError(404, "fail", `Cant find ${req.originalUrl} on this server`)
-  // );
-  res.sendFile("index.html");
+// Handles any requests that don't match the ones above
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname + "/client/build/index.html"));
 });
 
 // Handle all errors all together

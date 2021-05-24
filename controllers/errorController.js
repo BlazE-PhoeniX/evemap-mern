@@ -31,7 +31,9 @@ const JWTExpiredTokenError = () => {
 };
 
 const devErrorHandle = (err, req, res) => {
+  console.error("Error: " + err);
   if (req.originalUrl.startsWith("/api")) {
+    console.log(err);
     return res.status(err.statusCode).json({
       status: err.status,
       error: err,
@@ -40,12 +42,6 @@ const devErrorHandle = (err, req, res) => {
       data: null,
     });
   }
-
-  console.error("Error: " + err);
-  return res.status(err.statusCode).render("error", {
-    title: "Something went wrong!",
-    msg: err.message,
-  });
 };
 
 const prodErrorHandle = (err, req, res) => {
@@ -65,38 +61,24 @@ const prodErrorHandle = (err, req, res) => {
       });
     }
   }
-
-  if (err.isOperational) {
-    res.status(err.statusCode).render("error", {
-      title: "Something went wrong!",
-      msg: err.message,
-    });
-  } else {
-    res.status(500).json({
-      title: "Something went wrong!",
-      msg: "Please try again after sometime!",
-    });
-  }
 };
 
 module.exports = (err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
   err.status = err.status || "error";
   err.message = err.message || "Internal server error!";
+  let error = { ...err };
+  error.message = err.message;
+
+  if (err.name === "CastError") error = castErrorDB(error);
+  if (err.name === "ValidationError") error = validateErrorDB(error);
+  if (err.code === 11000) error = duplicateErrorDB(error);
+  if (err.name === "JsonWebTokenError") error = JWTSignError();
+  if (err.name === "TokenExpiredError") error = JWTExpiredTokenError();
 
   if (process.env.NODE_ENV === "development") {
-    devErrorHandle(err, req, res);
+    devErrorHandle(error, req, res);
   } else if (process.env.NODE_ENV === "production") {
-    let error = { ...err };
-    error.message = err.message;
-
-    if (err.name === "CastError") error = castErrorDB(error);
-    if (err.name === "ValidationError") error = validateErrorDB(error);
-    if (err.code === 11000) error = duplicateErrorDB(error);
-
-    if (err.name === "JsonWebTokenError") error = JWTSignError();
-    if (err.name === "TokenExpiredError") error = JWTExpiredTokenError();
-
     prodErrorHandle(error, req, res);
   }
 };
