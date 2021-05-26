@@ -1336,6 +1336,12 @@ a:visited {
   grid-template-columns: 45rem 1fr;
 }
 
+.no-event-text {
+  font-size: 1.6rem;
+  text-align: center;
+  margin-top: 2rem;
+}
+
 @media only screen and (max-width: 1200px) {
   .nav--tours {
     display: none;

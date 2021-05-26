@@ -67,18 +67,34 @@ const EventsList = props => {
   }, [events, query.filter, query.search, query.sort]);
 
   return (
-    <TransitionGroup className="events">
-      {processedEvents.map(event => (
-        <CSSTransition
-          classNames="event"
-          key={event.id}
-          mountOnEnter
-          unmountOnExit
-          timeout={300}>
-          <Event event={event} showFilledModal={props.showFilledModal} />
-        </CSSTransition>
-      ))}
-    </TransitionGroup>
+    <>
+      {events.length === 0 && (
+        <div className="events">
+          <p className="no-event-text">
+            No events added. Click on the event location in map to add an event.
+          </p>
+        </div>
+      )}
+      {events.length !== 0 && processedEvents.length === 0 && (
+        <div className="events">
+          <p className="no-event-text">No event matches the given filters!</p>
+        </div>
+      )}
+      {processedEvents.length > 0 && (
+        <TransitionGroup className="events">
+          {processedEvents.map(event => (
+            <CSSTransition
+              classNames="event"
+              key={event.id}
+              mountOnEnter
+              unmountOnExit
+              timeout={300}>
+              <Event event={event} showFilledModal={props.showFilledModal} />
+            </CSSTransition>
+          ))}
+        </TransitionGroup>
+      )}
+    </>
   );
 };
 
