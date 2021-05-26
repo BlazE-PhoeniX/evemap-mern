@@ -12,6 +12,7 @@ import Alert from "./components/ui/Alert";
 import Loader from "./components/ui/Loader";
 import CoordsGetter from "./components/ui/CoordsGetter";
 import Events from "./pages/Events";
+import MobileNav from "./components/mobilenav/MobileNav";
 
 const Signup = React.lazy(() => import("./pages/Signup"));
 const Login = React.lazy(() => import("./pages/Login"));
@@ -26,6 +27,7 @@ function App() {
   const alert = useSelector(state => state.ui.alert);
   const loader = useSelector(state => state.ui.loader);
   const coordsGetter = useSelector(state => state.ui.coordsGetter);
+  const mobileNav = useSelector(state => state.ui.mobileNav);
 
   useEffect(() => {
     dispatchRedux(getCoords());
@@ -97,6 +99,14 @@ function App() {
         timeout={300}
         classNames="coords-getter">
         <CoordsGetter />
+      </CSSTransition>
+      <CSSTransition
+        in={mobileNav.show}
+        mountOnEnter
+        unmountOnExit
+        timeout={500}
+        classNames="mobile-nav">
+        <MobileNav />
       </CSSTransition>
     </Layout>
   );

@@ -23,11 +23,11 @@ const CoordsGetter = props => {
             </a>{" "}
             to get your coordinates.
           </p>
-          <p className="coords-getter-ins-para">
+          <p className="coords-getter-ins-para desktop-only">
             If possible, visit the below link in mobile to get coordinates with
             more accuracy 😁
           </p>
-          <p className="coords-getter-ins-para link">
+          <p className="coords-getter-ins-para link desktop-only">
             https://www.gps-coordinates.net/my-location
           </p>
         </div>

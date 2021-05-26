@@ -91,3 +91,48 @@
 .coords-getter label {
   font-size: 2rem;
 }
+
+@media only screen and (max-width: 1000px) {
+  .coords-getter {
+    width: 70%;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .coords-getter {
+    flex-direction: column;
+    width: 60%;
+  }
+
+  .coords-getter-ins {
+    border: none;
+    border-bottom: 2px solid var(--color-brand--2);
+    width: 100%;
+    max-height: 25rem;
+    overflow-y: scroll;
+  }
+
+  .coords-getter-ins::-webkit-scrollbar {
+    width: 0;
+  }
+
+  .coords-getter form {
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .coords-getter {
+    width: 80%;
+  }
+
+  .coords-getter-ins-para.desktop-only {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .coords-getter {
+    width: 90%;
+  }
+}

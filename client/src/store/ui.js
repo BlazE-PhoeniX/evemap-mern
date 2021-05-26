@@ -12,6 +12,9 @@ const initialState = {
   coordsGetter: {
     show: false,
   },
+  mobileNav: {
+    show: false,
+  },
 };
 
 const uiSlice = createSlice({
@@ -42,6 +45,14 @@ const uiSlice = createSlice({
 
     hideCoordsGetter(state, action) {
       state.coordsGetter.show = false;
+    },
+
+    showMobileNav(state, action) {
+      state.mobileNav.show = true;
+    },
+
+    hideMobileNav(state, action) {
+      state.mobileNav.show = false;
     },
   },
 });
@@ -81,5 +92,17 @@ export const showCoordsGetter = () => {
 export const hideCoordsGetter = () => {
   return dispatch => {
     dispatch(uiActions.hideCoordsGetter());
+  };
+};
+
+export const showMobileNav = () => {
+  return dispatch => {
+    dispatch(uiActions.showMobileNav());
+  };
+};
+
+export const hideMobileNav = () => {
+  return dispatch => {
+    dispatch(uiActions.hideMobileNav());
   };
 };

@@ -1,0 +1,106 @@
+.mobile-nav-bg {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  z-index: 105;
+  background-color: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(2px);
+  display: flex;
+  justify-content: flex-end;
+  transition: transform 0.5s;
+  display: none;
+}
+
+.mobile-nav {
+  height: 100%;
+  width: 40%;
+  background: linear-gradient(
+    to top right,
+    var(--color-dark--1),
+    var(--color-dark--2)
+  );
+  padding: 4rem 0;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.5s;
+}
+
+.mobile-nav-enter {
+  transform: translateX(100%);
+}
+.mobile-nav-enter-active {
+  transform: translateX(0%);
+}
+.mobile-nav-exit {
+  transform: translateX(0%);
+}
+.mobile-nav-exit-active {
+  transform: translateX(100%);
+}
+
+.mobile-nav nav {
+  flex-grow: 1;
+  margin-top: 4rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.mobile-nav span {
+  position: absolute;
+  font-size: 4rem;
+  top: 1rem;
+  right: 2rem;
+  color: #ddd;
+  cursor: pointer;
+  transform: all 0.1s;
+}
+
+.mobile-nav span:hover {
+  color: #aaa;
+}
+
+.mobile-nav footer {
+  text-align: center;
+  font-size: 1.5rem;
+  margin-top: 4rem;
+}
+
+.mobile-nav-user {
+  display: inline-block;
+  display: flex;
+  font-size: 2rem;
+  align-items: center;
+  margin: 0 4rem 2rem;
+  text-transform: uppercase;
+}
+
+.mobile-nav-user img {
+  margin-right: 2rem;
+  transform: translateY(-0.3rem);
+}
+
+@media only screen and (max-width: 1000px) {
+  .mobile-nav-bg {
+    display: flex;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .mobile-nav {
+    width: 50%;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .mobile-nav {
+    transition: transform 0.3s;
+    width: 60%;
+  }
+}
+@media only screen and (max-width: 450px) {
+  .mobile-nav {
+    width: 75%;
+  }
+}

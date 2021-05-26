@@ -38,7 +38,6 @@ export const loginUser = (auth, history) => {
 
       dispatch(showAlert("success", res.data.message));
       dispatch(authActions.loginUser({ user: res.data.user }));
-      localStorage.setItem("jwt", res.data.token);
 
       resetAll(auth.email, auth.password);
 
@@ -65,7 +64,6 @@ export const signupUser = (creds, history) => {
 
       dispatch(showAlert("success", res.data.message));
       dispatch(authActions.loginUser({ user: res.data.user }));
-      localStorage.setItem("jwt", res.data.token);
 
       resetAll(creds.name, creds.email, creds.password, creds.confirmPassword);
 
@@ -126,7 +124,10 @@ export const checkLogin = () => {
     try {
       dispatch(showLoader());
       const res = await axios.get("/api/v1/users/check-login");
-      dispatch(authActions.loginUser({ user: res.data.user }));
+      console.log(res.data.loggedIn);
+      if (res.data.loggedIn) {
+        dispatch(authActions.loginUser({ user: res.data.user }));
+      }
     } catch (err) {
       console.log(err.response);
     }
@@ -142,7 +143,6 @@ export const logoutUser = (history, user) => {
         const res = await axios.get("/api/v1/users/logout");
 
         dispatch(showAlert("success", res.data.message));
-        localStorage.removeItem("jwt");
         dispatch(authActions.logoutUser());
         dispatch(eventsActions.replaceEvents({ events: [] }));
 
@@ -188,7 +188,6 @@ export const updatePassword = (creds, user) => {
         });
 
         dispatch(showAlert("success", res.data.message));
-        localStorage.setItem("jwt", res.data.token);
         resetAll(
           creds.currentPassword,
           creds.newPassword,

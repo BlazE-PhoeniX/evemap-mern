@@ -623,3 +623,13 @@ a.mapboxgl-ctrl-logo.mapboxgl-compact {
     display: none;
   }
 }
+
+.mapboxgl-ctrl-attrib {
+  display: none;
+}
+
+@media only screen and (max-width: 600px) {
+  .mapboxgl-ctrl-group {
+    display: none;
+  }
+}

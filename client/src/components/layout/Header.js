@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 
 import Nav from "./Nav";
 import { useEffect, useState } from "react";
+import MenuIcon from "./MenuIcon";
 
 const months = [
   "January",
@@ -49,6 +50,7 @@ const Header = props => {
       </nav>
       <Logo />
       <Nav user={user} />
+      <MenuIcon />
     </header>
   );
 };

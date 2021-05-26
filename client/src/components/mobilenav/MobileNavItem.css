@@ -1,0 +1,30 @@
+.mobile-nav-item {
+  font-size: 2rem;
+}
+
+.mobile-nav-link {
+  color: #ddd !important;
+  margin: 1rem 0;
+  border-left: 4px solid transparent;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  padding: 1rem 4rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  font-size: 1.8rem;
+  text-transform: uppercase;
+  font-weight: 400;
+  text-decoration: none;
+  -webkit-transition: all 0.15s;
+  transition: all 0.15s;
+}
+
+.mobile-nav-link-active,
+.mobile-nav-link:hover {
+  border-left: 4px solid #fff !important;
+  background: rgba(256, 256, 256, 0.2);
+}
